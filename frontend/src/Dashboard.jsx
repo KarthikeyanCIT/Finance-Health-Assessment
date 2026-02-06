@@ -9,7 +9,10 @@ import { ChartCard } from './components/ChartCard';
 import { Sidebar } from './components/Sidebar';
 import { generateInvestorReport } from './utils/reportGenerator';
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000/api/v1";
+const rawApiUrl = import.meta.env.VITE_API_URL || "http://localhost:8000/api/v1";
+const API_URL = rawApiUrl.endsWith('/') ? rawApiUrl.slice(0, -1) : rawApiUrl;
+
+console.log("[Production] Connecting to API:", API_URL);
 
 const Dashboard = ({ onLogout, businessId }) => {
     const { t, i18n } = useTranslation();

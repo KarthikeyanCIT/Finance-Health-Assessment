@@ -15,7 +15,10 @@ const Auth = ({ onLogin }) => {
         setLoading(true);
         setError(null);
 
-        const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000/api/v1";
+        const rawUrl = import.meta.env.VITE_API_URL || "http://localhost:8000/api/v1";
+        const BASE_URL = rawUrl.endsWith('/') ? rawUrl.slice(0, -1) : rawUrl;
+
+        console.log("[Production] Auth request to:", BASE_URL);
         try {
             if (!isLogin) {
                 // Real Signup

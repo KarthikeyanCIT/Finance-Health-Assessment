@@ -16,7 +16,9 @@ app = FastAPI(
 )
 
 # Origins for CORS - Production and Development support
-frontend_url = os.getenv("FRONTEND_URL", "http://localhost:5173")
+raw_frontend_url = os.getenv("FRONTEND_URL", "http://localhost:5173")
+frontend_url = raw_frontend_url.rstrip('/')
+
 origins = [
     frontend_url,
     "http://localhost:5173",
@@ -28,6 +30,7 @@ origins = [
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
+    allow_origin_regex="https://.*\\.vercel\\.app", # Support Vercel previews
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
