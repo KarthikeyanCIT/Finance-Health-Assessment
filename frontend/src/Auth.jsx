@@ -15,10 +15,11 @@ const Auth = ({ onLogin }) => {
         setLoading(true);
         setError(null);
 
+        const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000/api/v1";
         try {
             if (!isLogin) {
                 // Real Signup
-                const res = await axios.post('http://localhost:8000/api/v1/auth/signup', {
+                const res = await axios.post(`${BASE_URL}/auth/signup`, {
                     email: formData.email,
                     password: formData.password,
                     full_name: formData.name || "Enterprise Lead"
@@ -26,7 +27,7 @@ const Auth = ({ onLogin }) => {
                 onLogin(res.data.business_id);
             } else {
                 // Real Login
-                const res = await axios.post('http://localhost:8000/api/v1/auth/login', {
+                const res = await axios.post(`${BASE_URL}/auth/login`, {
                     email: formData.email,
                     password: formData.password
                 });

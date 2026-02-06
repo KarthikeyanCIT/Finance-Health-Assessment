@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.api.api import api_router
@@ -14,15 +15,14 @@ app = FastAPI(
     version="2.0.0"
 )
 
-# Origins for CORS - Explicitly allowing localhost and 127.0.0.1
+# Origins for CORS - Production and Development support
+frontend_url = os.getenv("FRONTEND_URL", "http://localhost:5173")
 origins = [
+    frontend_url,
     "http://localhost:5173",
     "http://localhost:5174",
-    "http://localhost:3000",
     "http://127.0.0.1:5173",
     "http://127.0.0.1:5174",
-    "http://127.0.0.1:3000",
-    "*" # Development convenience
 ]
 
 app.add_middleware(
